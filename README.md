@@ -123,6 +123,25 @@ ollama run phi3
 
 ---
 
+### 5. Run Minio 
+
+```bash
+cd storage/minio
+chmod +x runner.sh
+./runner.sh
+```
+
+---
+
+### 6. Create Minio Bucket 
+
+```
+After running it, redirect to localhost:9001 and use the user and password
+in the .env and login. then create the bucket
+```
+
+---
+
 ## API Endpoints
 
 ### Books
@@ -173,12 +192,25 @@ ollama run phi3
 
 ## Screenshots
 
-> Add 3–4 screenshots here:
+* Home Screen
+
+> ![alt text](image.png)
 
 * Book List Page
-* Book Detail Page
+
+> ![alt text](image-1.png)
+
 * Summary Modal
+
+> ![alt text](image-2.png)
+
 * Recommendation Modal
+
+> ![alt text](image-3.png)
+
+* Ask Questions 
+
+> ![alt text](image-4.png)
 
 ---
 
