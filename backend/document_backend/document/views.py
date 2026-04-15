@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Book
 from .serializers import BookSerializer
-from .services import generate_summary, get_recommendations, get_embedding
+from .services import generate_summary, get_recommendations, get_embedding, upload_to_minio
 
 
 class BookListView(APIView):

@@ -8,3 +8,4 @@ pymysql
 uuid
 sentence_transformers
 scikit-learn
+djangorestframework
