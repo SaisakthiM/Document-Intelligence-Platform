@@ -1,32 +1,209 @@
-mariadb -u root -p                  ─╯
-Enter password: 
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 3
-Server version: 11.8.6-MariaDB Arch Linux
+# Document Intelligence Platform
 
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+This is a Full Stack Project with AI Intergration to upload, view, and ask about the book with AI. 
 
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+---
 
-MariaDB [(none)]> show databases
-    -> ;
-+--------------------+
-| Database           |
-+--------------------+
-| cinema             |
-| employees          |
-| information_schema |
-| inventory_db       |
-| main_data          |
-| mysql              |
-| performance_schema |
-| sai                |
-| sys                |
-+--------------------+
-9 rows in set (0.011 sec)
+# Features
 
-MariaDB [(none)]> create database book_db;
-Query OK, 1 row affected (0.001 sec)
+### Book Management
 
-MariaDB [(none)]> exit
-Bye
+* Upload and store books with metadata
+* View book details (title, author, description, rating)
+
+### AI Insights
+
+* **Summary Generation** (Ollama / Gemini)
+* **Recommendation System** (embedding-based similarity)
+* Intelligent fallback mechanism between models
+
+### Recommendation Engine
+
+* Uses **Sentence Transformers**
+* Computes **cosine similarity**
+* Returns top similar books
+
+### Summary Flow
+
+* Uses Ollama and Gemini as fallback to summarize the book 
+* The summary is also cached by uploading it to the database
+* It is generated in markdown style and used react-markdown to render
+
+### Q&A System (RAG-style)
+
+* Ask questions about books
+* Uses contextual prompt construction
+* Supports conversation history
+
+### Frontend
+
+* React-based UI
+* Markdown rendering for AI responses (react-markdown module)
+
+---
+
+# Tech Stack
+
+### Backend
+
+* Django REST Framework
+* MySQL (metadata storage)
+* Sentence Transformers (embeddings)
+* Ollama (local LLM)
+* Gemini API (fallback AI)
+
+### Frontend
+
+* ReactJS
+* Tailwind CSS
+* React Markdown + Remark GFM
+
+### Storage
+
+* MinIO (file storage)
+
+---
+
+## Setup Instructions
+
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/SaisakthiM/Document-Intelligence-Platform
+cd project
+```
+
+---
+
+### 2. Backend Setup
+
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+Create `.env` file:
+
+```env
+PASSWORD_DATABASE=saisakthi2008
+PORT_AI=11434
+GEMINI_API_KEY=AIzaSyDgDMtJN5DrFfBfwym2x7Ea_sjqzOvSSLc
+MINIO_ENDPOINT = "localhost:9000"
+MINIO_ACCESS_KEY = "admin"
+MINIO_SECRET_KEY = "password123"
+MINIO_BUCKET = "documents"
+MINIO_SECURE = False
+```
+
+Run server:
+
+```bash
+python manage.py migrate
+python manage.py runserver
+```
+
+---
+
+### 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+### 4. Run Ollama (for local AI)
+
+```bash
+ollama run phi3
+```
+
+---
+
+## API Endpoints
+
+### Books
+
+| Method | Endpoint       | Description      |
+| ------ | -------------- | ---------------- |
+| GET    | `/books/`      | List all books   |
+| POST   | `/books/`      | Upload book      |
+| GET    | `/books/<id>/` | Get book details |
+
+---
+
+### AI Features
+
+| Method | Endpoint                       | Description         |
+| ------ | ------------------------------ | ------------------- |
+| POST   | `/books/<id>/summarize/`       | Generate summary    |
+| GET    | `/books/<id>/recommendations/` | Get similar books   |
+| POST   | `/ask/`                        | Ask questions (RAG) |
+
+---
+
+## Sample Output
+
+### Summary
+
+```json
+{
+  "summary": "Atomic Habits focuses on building small, consistent habits...",
+  "summary_source": "ollama"
+}
+```
+
+---
+
+### Recommendations
+
+```json
+{
+  "recommendations": [
+    { "title": "Deep Work" },
+    { "title": "The Power of Habit" }
+  ]
+}
+```
+
+---
+
+## Screenshots
+
+> Add 3–4 screenshots here:
+
+* Book List Page
+* Book Detail Page
+* Summary Modal
+* Recommendation Modal
+
+---
+
+## Key Concepts Implemented
+
+* Embedding-based similarity search
+* AI fallback architecture
+* Prompt engineering
+* Modular service layer
+* Basic RAG pipeline
+
+---
+
+## Future Improvements
+
+* Full vector database integration (ChromaDB / FAISS)
+* Chat history persistence
+* Better UI/UX enhancements
+* Advanced semantic chunking
+* External data enrichment APIs
+
+---
+
+## Author
+
+Saisakthi
+
+---
